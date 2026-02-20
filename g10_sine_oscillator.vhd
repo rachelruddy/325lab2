@@ -6,6 +6,7 @@ entity g10_sine_oscillator is
 	port(
 		clk: in std_logic;
 		reset: in std_logic;
+		f: in signed(23 downto 0);
 		cosine: out signed(23 downto 0);
 		sine: out signed(23 downto 0)
 	);
@@ -13,7 +14,6 @@ end entity;
 
 architecture rtl of g10_sine_oscillator is 
 	-- declare all signals --
-	signal f: signed(23 downto 0);		-- 24 bit signed constant, fraction between 0 and 1
 	-- initialize curr values to be reset state values
 	signal cos_cur: signed(23 downto 0) := (23 => '0', others => '1');
 	signal sin_cur: signed(23 downto 0) := (others => '0');
@@ -41,9 +41,10 @@ architecture rtl of g10_sine_oscillator is
 		--mult_sin = f * cos_next
 		mult_sin <= f * cos_next;
 		
-		cos_new <= cos_cur - 
-		sin_new <= sin_cur + 
+		cos_next <= cos_cur - mult_cos(47 downto 24);
+		sin_next <= sin_cur + mult_sin(47 downto 24);
 		
+		-------------SEQUENTIAL LOGIC-------------------------
 		process(clk, reset)
 		begin
 			--sequential logic here
@@ -61,7 +62,7 @@ architecture rtl of g10_sine_oscillator is
 		end process;
 		
 		
-		-- output logic
+		-------------OUTPUT LOGIC-------------------------
 		cosine <= cos_cur;
 		sine <= sin_cur;
 		
