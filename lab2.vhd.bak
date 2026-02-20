@@ -1,0 +1,38 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity oscillator is
+	port(
+		clk: in std_logic;
+		reset: in std_logic;
+		f: 
+		cosine: out signed(23 downto 0);
+		sine: out signed(23 downto 0)
+	);
+end entity;
+
+architecture rtl of oscillator is 
+	-- declare all signals --
+	
+	begin
+		-- combinatorial and sequantial logic goes here
+		
+		process(clk, reset)
+		begin
+			--sequential logic here
+			if reset = '1' then
+				-- reset cosine and sine
+				null;
+			elsif rising_edge(clk) then
+				-- logic for rising edge latch onto new values for cosine and sine
+				null;
+			end if;
+		end process;
+		
+		
+		-- output logic
+		
+end architecture;
+		
+				
